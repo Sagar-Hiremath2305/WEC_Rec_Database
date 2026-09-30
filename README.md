@@ -1,15 +1,15 @@
-# 🚀 Build Your Own Redis (C++17)
+# Build Your Own Redis (C++17)
 
 Welcome to this custom, from-scratch implementation of a Redis-compatible in-memory data store. This project strictly adheres to all foundational constraints: it features a custom open-addressing hashtable, a single-threaded event loop, manual memory tracking, and AOF crash recovery—all built entirely without async frameworks, garbage collection, or standard library hash maps.
 
-## ✨ Features
+## Features
 * **Custom Hashtable:** Open-addressing dictionary with strict `PROBE_CAP` limits and zero-pause incremental resizing across two live tables.
 * **Single-Threaded Event Loop:** High-performance multiplexing using `kqueue` (macOS), maintaining strict per-connection state machines without blocking.
 * **Write-Ahead Log (AOF):** Configurable crash recovery with three fsync modes (`always`, `everysec`, `no`), sequence numbers, checksum validation, and background log compaction (rewrite).
 * **Memory & Expiry Management:** Exact byte tracking (via overloaded `operator new/delete`) avoiding `/proc` polling. Expiry combines lazy evaluation on-read with a wall-clock bounded active background sampler. Eviction strictly follows approximate LRU across all 5 standard policies.
 * **Data Types Supported:** Strings, Lists, Hashes, Sets, and Sorted Sets (using a custom Skiplist).
 
-## 🛠️ Build and Run
+## Build and Run
 ```bash
 # Build the server (Requires a C++17 compatible compiler like Clang or GCC)
 make
@@ -20,7 +20,7 @@ make
 
 ---
 
-## 📚 Theoretical Justifications (Grading Requirements)
+## Theoretical Justifications (Grading Requirements)
 
 ### Phase 1: Protocol Parsing & Error Handling
 The RESP parser implements a resumable, byte-by-byte state machine capable of handling partial reads seamlessly.
@@ -56,7 +56,7 @@ A traditional stateful, single-process, in-memory database like Redis is fundame
 
 ---
 
-## 🐛 Phase 5: Crash Bug Log & Resolution
+## Phase 5: Crash Bug Log & Resolution
 
 Building the AOF crash recovery was the most failure-prone phase of the project. Below is a log of the primary crash bug encountered, how it was reproduced, and the steps taken to resolve it.
 
